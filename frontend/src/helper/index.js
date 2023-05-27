@@ -232,11 +232,21 @@ export const getAllCourseEnrollments = async ({courseTitle}) => {
   return await response.json();
 }
 
+// Function to get all enrollments for a student
 export const addAssessment = async ({title, duration, course, passingCriteria, numQuestions, questions}) => {
   const response = await fetch(`${API_URL}/assessmentRoute/add`, {
     method: "POST",
     headers: getHeaders(),
     body: JSON.stringify({ title, duration, course, passingCriteria, numQuestions, questions }),
+  });
+  return await response.json();
+}
+
+// Function to get learners for all courses
+export const getAllLearners = async () => {
+  const response = await fetch(`${API_URL}/courseRoute/getCourseStudents`, {
+    method: "GET",
+    headers: getHeaders(),
   });
   return await response.json();
 }

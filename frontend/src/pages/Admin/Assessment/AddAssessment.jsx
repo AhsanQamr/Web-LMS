@@ -74,7 +74,6 @@ function AddAssessment() {
                 };
                 questions.push(question);
             }
-            console.log(title, duration, course, passingCriteria, numQuestions, questions);
             const response = await addAssessment({ title, duration, course, passingCriteria, numQuestions, questions });
             if (!response) {
                 alert("Can not reach Server");

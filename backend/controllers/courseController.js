@@ -3,6 +3,7 @@ const Course = require('../models/course')
 const Material = require('../models/material')
 const Audit = require('../models/audit')
 const Assessment = require('../models/assessment')
+const Enrollment = require('../models/enrollments')
 require('dotenv').config()
 
 
@@ -262,4 +263,47 @@ const getCourseCount = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { addCourse, updateCourse, deleteCourse, getAllCourses, getCourse, getCourseCount }
+const getCourseStudents = asyncHandler(async (req, res) => {
+    const auditEmail = req.header('email');
+    
+    // get all titles
+    const courses = await Course.find({})
+    const titles = []
+    courses.forEach(course => {
+        titles.push(course.title)
+    })
+    console.log(titles)
+
+    const enrollments = await Enrollment.find({ courseTitle: { $in: titles } })
+    if (enrollments) {
+        // add count with each title
+        const data = []
+        titles.forEach(title => {
+            let count = 0
+            enrollments.forEach(enrollment => {
+                if (enrollment.courseTitle === title) {
+                    count++
+                }
+            })
+            data.push({
+                title,
+                count
+            })
+        }
+        )
+        res.status(200).json({
+            status: 200,
+            data
+        });
+    }
+    else {
+        const data = {
+            status: 400,
+            message: 'Error: Course not found'
+        }
+        res.status(400).send(data)
+        return
+    }
+})
+
+module.exports = { addCourse, updateCourse, deleteCourse, getAllCourses, getCourse, getCourseCount, getCourseStudents }

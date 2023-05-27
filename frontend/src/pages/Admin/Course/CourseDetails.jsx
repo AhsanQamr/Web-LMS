@@ -45,13 +45,11 @@ const CourseDetails = () => {
       const response = await getCourse({ title });
       response.course.materials = response.materials;
       response.course.assessments = response.assessments;
-      console.log(response.course.assessments);
       setCourse(response.course);
     };
     const fetchLearners = async () => {
       const courseTitle = title;
       const response = await getAllCourseEnrollments({ courseTitle });
-      console.log(response.enrollments);
       setEnrollments(response.enrollments);
     };
     fetchProduct();

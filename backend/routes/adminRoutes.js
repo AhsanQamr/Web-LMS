@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { login } = require('../controllers/adminController')
+const { login, signup } = require('../controllers/adminController')
 
 // GET  api/adminRoute/status/
 router.get('/status',(req,res) => {
@@ -9,5 +9,8 @@ router.get('/status',(req,res) => {
 
 // POST  api/adminRoute/login/
 router.post('/login',login)
+
+// POST  api/adminRoute/signup/
+router.post('/signup',signup)
 
 module.exports = router
